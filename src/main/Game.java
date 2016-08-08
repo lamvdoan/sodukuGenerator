@@ -1,9 +1,9 @@
-/**
- * Created by lamvdoan on 8/2/16.
- */
+
 public class Game {
 
-    public static void  main(String [] args) {
-
+    public static void main(String [] args) {
+        Puzzle puzzle = Puzzle.getInstance();
+        puzzle.generateNumbersForEachCell();
+        puzzle.printGrid();
     }
 }

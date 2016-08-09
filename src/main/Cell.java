@@ -15,7 +15,7 @@ public class Cell {
         }
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 

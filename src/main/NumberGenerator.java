@@ -1,33 +1,32 @@
 import java.util.*;
 
 public class NumberGenerator {
-    ColumnRegion columnRegion = new ColumnRegion();
+    Regions regions = new Regions();
+    Random random = new Random();
+    Puzzle puzzle = Puzzle.getInstance();
+
+    public void generateNumberForCell(Cell cell) {
+        Integer generatedNumber = generateRandomNumber(cell);
+        cell.setValue(generatedNumber);
+        removePossibleValueForEachColumn(cell);
+    }
 
     private int generateRandomNumber(Cell cell) {
-        Random random = new Random();
         int index = random.nextInt(cell.getPossibleValues().size());
-//        System.out.println("index " + index);
-        System.out.println("value " + cell.getPossibleValues().get(index));
         return cell.getPossibleValues().get(index);
     }
 
-    public void generateNumberForCell(Cell cell) {
-        Integer insertedNumber = generateRandomNumber(cell);
-        cell.setValue(insertedNumber);
+    private void removePossibleValueForEachColumn(Cell cellWithValue) {
+        int columnNumber = cellWithValue.getCoordinate().getRow();
+        int rowNumber = cellWithValue.getCoordinate().getCol();
 
-        // Iterate thru each Column Region
-        for(List<Cell> listOfCells : columnRegion.columns) {
-            for(Cell currentCell : listOfCells) {
-                if(currentCell.getCoordinate() != cell.getCoordinate()) {
-                    currentCell.getPossibleValues().remove(insertedNumber);
-                }
-            }
+        for(Coordinate coordinateOfOtherCells : regions.columns.get(columnNumber)) {
+            puzzle.grid.get(coordinateOfOtherCells.getRow()).get(coordinateOfOtherCells.getCol()).getPossibleValues().remove(cellWithValue.getValue());
         }
 
-//        for (int row = 0; row < 9; row++) {
-//            for (int col = 0; col < 9; col++) {
-//            }
-//        }
+        for(Coordinate coordinateOfOtherCells : regions.rows.get(rowNumber)) {
+            puzzle.grid.get(coordinateOfOtherCells.getRow()).get(coordinateOfOtherCells.getCol()).getPossibleValues().remove(cellWithValue.getValue());
+        }
     }
 
 }

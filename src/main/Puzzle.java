@@ -21,13 +21,13 @@ public class Puzzle {
 
     public void generateNumbersForEachCell() {
         NumberGenerator numberGenerator = new NumberGenerator();
-
+        int count = 0;
         for(int row = 0; row < 9; row++) {
             for(int col = 0; col < 9; col++) {
                 numberGenerator.generateNumberForCell(grid.get(row).get(col));
+                out.println("Numbers generated: " + ++count);
             }
         }
-
     }
 
     public void printGrid() {
@@ -37,7 +37,6 @@ public class Puzzle {
             out.print("|");
 
             for(int col = 0; col < 9; col++) {
-//                NumberGenerator.generateNumberForCell(grid.get(row).get(col));
                 if(col  == 3 || col == 6) {
                     out.print("|");
                 }

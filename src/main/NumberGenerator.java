@@ -17,8 +17,39 @@ public class NumberGenerator {
     }
 
     private void removePossibleValueForEachColumn(Cell cellWithValue) {
-        removeValueFromEachCellInEachColumn(cellWithValue);
-        removeValueFromEachCellInEachRow(cellWithValue);
+//        removeValueFromEachCellInEachColumn(cellWithValue);
+//        removeValueFromEachCellInEachRow(cellWithValue);
+        removeValueFromEachCellInEachBlock(cellWithValue);
+    }
+
+    private void removeValueFromEachCellInEachBlock(Cell cellWithValue) {
+        Integer rowOfBlocks;
+        Integer rowOfCell = cellWithValue.getCoordinate().getRow();
+        Integer colOfCell = cellWithValue.getCoordinate().getCol();
+
+        if(colOfCell < 3) {
+            rowOfBlocks = getBlockNumber(rowOfCell, 0);
+        } else if(colOfCell >= 3 && colOfCell < 6) {
+            rowOfBlocks = getBlockNumber(rowOfCell, 3);
+        } else {
+            rowOfBlocks = getBlockNumber(rowOfCell, 6);
+        }
+
+        for(Coordinate coordinateOfOtherCells : regions.getBlocks().get(rowOfBlocks)) {
+            puzzle.getCell(coordinateOfOtherCells).getPossibleValues().remove(cellWithValue.getValue());
+        }
+    }
+
+    private Integer getBlockNumber(Integer rowOfCell, Integer rowOfBlocks) {
+        if (rowOfCell < 3) {
+            return rowOfBlocks;
+        } else if(rowOfCell >= 3 && rowOfCell < 6) {
+            rowOfBlocks++;
+            return rowOfBlocks;
+        } else {
+            rowOfBlocks += 2;
+            return rowOfBlocks;
+        }
     }
 
     private void removeValueFromEachCellInEachColumn(Cell cellWithValue) {
@@ -32,5 +63,4 @@ public class NumberGenerator {
             puzzle.getCell(coordinateOfOtherCells).getPossibleValues().remove(cellWithValue.getValue());
         }
     }
-
 }

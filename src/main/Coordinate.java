@@ -14,4 +14,8 @@ public class Coordinate {
     public int getRow() {
         return row;
     }
+
+    public String printCoordinates() {
+        return row + ", " + col;
+    }
 }

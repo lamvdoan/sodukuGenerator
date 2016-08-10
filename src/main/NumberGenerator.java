@@ -3,7 +3,7 @@ import java.util.*;
 public class NumberGenerator {
     private Regions regions = new Regions();
     private Random random = new Random();
-    private Puzzle puzzle = Puzzle.getInstance();
+    private Grid grid = Grid.getInstance();
 
     public void generateNumberForCell(Cell cell) {
         Integer generatedNumber = generateRandomNumberForACell(cell);
@@ -23,20 +23,20 @@ public class NumberGenerator {
     }
 
     private void removeValueFromEachCellInEachBlock(Cell cellWithValue) {
-        Integer rowOfBlocks;
+        Integer blockNumber;
         Integer rowOfCell = cellWithValue.getCoordinate().getRow();
         Integer colOfCell = cellWithValue.getCoordinate().getCol();
 
         if(colOfCell < 3) {
-            rowOfBlocks = getBlockNumber(rowOfCell, 0);
+            blockNumber = getBlockNumber(rowOfCell, 0);
         } else if(colOfCell >= 3 && colOfCell < 6) {
-            rowOfBlocks = getBlockNumber(rowOfCell, 3);
+            blockNumber = getBlockNumber(rowOfCell, 3);
         } else {
-            rowOfBlocks = getBlockNumber(rowOfCell, 6);
+            blockNumber = getBlockNumber(rowOfCell, 6);
         }
 
-        for(Coordinate coordinateOfOtherCells : regions.getBlocks().get(rowOfBlocks)) {
-            puzzle.getCell(coordinateOfOtherCells).getPossibleValues().remove(cellWithValue.getValue());
+        for(Coordinate coordinateOfOtherCells : regions.getBlocks().get(blockNumber)) {
+            grid.getCell(coordinateOfOtherCells).getPossibleValues().remove(cellWithValue.getValue());
         }
     }
 
@@ -54,13 +54,13 @@ public class NumberGenerator {
 
     private void removeValueFromEachCellInEachColumn(Cell cellWithValue) {
         for(Coordinate coordinateOfOtherCells : regions.getColumns().get(cellWithValue.getCoordinate().getCol())) {
-            puzzle.getCell(coordinateOfOtherCells).getPossibleValues().remove(cellWithValue.getValue());
+            grid.getCell(coordinateOfOtherCells).getPossibleValues().remove(cellWithValue.getValue());
         }
     }
 
     private void removeValueFromEachCellInEachRow(Cell cellWithValue) {
         for(Coordinate coordinateOfOtherCells : regions.getRows().get(cellWithValue.getCoordinate().getRow())) {
-            puzzle.getCell(coordinateOfOtherCells).getPossibleValues().remove(cellWithValue.getValue());
+            grid.getCell(coordinateOfOtherCells).getPossibleValues().remove(cellWithValue.getValue());
         }
     }
 }

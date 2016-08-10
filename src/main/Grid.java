@@ -3,24 +3,24 @@ import java.util.List;
 import static java.lang.System.out;
 
 
-public class Puzzle {
-    private static Puzzle instance = null;
-    private List<List<Cell>> grid = new ArrayList<>();
+public class Grid {
+    private static Grid instance = null;
+    private List<List<Cell>> gridList = new ArrayList<>();
 
-    public static Puzzle getInstance() {
+    public static Grid getInstance() {
         if(instance == null) {
-            instance = new Puzzle();
+            instance = new Grid();
         }
 
         return instance;
     }
 
-    private Puzzle() {
+    private Grid() {
         initializeGrid();
     }
 
     public Cell getCell(Coordinate coordinate) {
-        return grid.get(coordinate.getRow()).get(coordinate.getCol());
+        return gridList.get(coordinate.getRow()).get(coordinate.getCol());
     }
 
     public void generateNumbersForEachCell() {
@@ -28,7 +28,7 @@ public class Puzzle {
         int count = 0;
         for(int row = 0; row < 9; row++) {
             for(int col = 0; col < 9; col++) {
-                numberGenerator.generateNumberForCell(grid.get(row).get(col));
+                numberGenerator.generateNumberForCell(gridList.get(row).get(col));
                 out.println("Numbers generated: " + ++count);
             }
         }
@@ -49,7 +49,7 @@ public class Puzzle {
                     out.print(" ");
                 }
 
-                out.print(grid.get(row).get(col).getValue() + " ");
+                out.print(gridList.get(row).get(col).getValue() + " ");
             }
 
             out.println("|");
@@ -70,7 +70,7 @@ public class Puzzle {
                 columns.add(new Cell(new Coordinate(row, col)));
             }
 
-            grid.add(columns);
+            gridList.add(columns);
         }
     }
 }

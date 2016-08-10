@@ -7,6 +7,11 @@ public class Regions {
     private List<List<Coordinate>> blocks = new ArrayList<>();
 
     public Regions() {
+        addCoordinatesToRowAndColumnRegions();
+        addCoordinatesToBlockRegion();
+    }
+
+    private void addCoordinatesToRowAndColumnRegions() {
         for(int row = 0; row < 9; row++) {
             List<Coordinate> columnList = new ArrayList<>();
             List<Coordinate> rowList = new ArrayList<>();
@@ -19,7 +24,9 @@ public class Regions {
             columns.add(columnList);
             rows.add(rowList);
         }
+    }
 
+    private void addCoordinatesToBlockRegion() {
         for(int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
                 if(row % 3 == 0 && col % 3 == 0) {
@@ -27,21 +34,6 @@ public class Regions {
                 }
             }
         }
-
-//        blockCheck();
-    }
-
-    private void blockCheck() {
-
-        for(int i = 0;i<9;i++) {
-            System.out.println();
-            System.out.println("Block: " + i);
-
-            for(int j=0; j<9; j++) {
-                System.out.print(blocks.get(i).get(j).printCoordinates() + " | ");
-            }
-        }
-        System.out.println();
     }
 
     private void addToBlocks(Integer initialRow, Integer initialColumn) {
@@ -52,8 +44,8 @@ public class Regions {
                 blockList.add(new Coordinate(col, row));
             }
         }
-        blocks.add(blockList);
 
+        blocks.add(blockList);
     }
 
     public List<List<Coordinate>> getColumns() {

@@ -2,8 +2,8 @@
 public class Game {
 
     public static void main(String [] args) {
-        Puzzle puzzle = Puzzle.getInstance();
-        puzzle.generateNumbersForEachCell();
-        puzzle.printGrid();
+        Grid grid = Grid.getInstance();
+        grid.generateNumbersForEachCell();
+        grid.printGrid();
     }
 }

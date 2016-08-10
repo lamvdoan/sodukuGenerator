@@ -1,31 +1,35 @@
 import java.util.*;
 
 public class NumberGenerator {
-    Regions regions = new Regions();
-    Random random = new Random();
-    Puzzle puzzle = Puzzle.getInstance();
+    private Regions regions = new Regions();
+    private Random random = new Random();
+    private Puzzle puzzle = Puzzle.getInstance();
 
     public void generateNumberForCell(Cell cell) {
-        Integer generatedNumber = generateRandomNumber(cell);
+        Integer generatedNumber = generateRandomNumberForACell(cell);
         cell.setValue(generatedNumber);
         removePossibleValueForEachColumn(cell);
     }
 
-    private int generateRandomNumber(Cell cell) {
+    private int generateRandomNumberForACell(Cell cell) {
         int index = random.nextInt(cell.getPossibleValues().size());
         return cell.getPossibleValues().get(index);
     }
 
     private void removePossibleValueForEachColumn(Cell cellWithValue) {
-        int columnNumber = cellWithValue.getCoordinate().getRow();
-        int rowNumber = cellWithValue.getCoordinate().getCol();
+        removeValueFromEachCellInEachColumn(cellWithValue);
+        removeValueFromEachCellInEachRow(cellWithValue);
+    }
 
-        for(Coordinate coordinateOfOtherCells : regions.columns.get(columnNumber)) {
-            puzzle.grid.get(coordinateOfOtherCells.getRow()).get(coordinateOfOtherCells.getCol()).getPossibleValues().remove(cellWithValue.getValue());
+    private void removeValueFromEachCellInEachColumn(Cell cellWithValue) {
+        for(Coordinate coordinateOfOtherCells : regions.getColumns().get(cellWithValue.getCoordinate().getCol())) {
+            puzzle.getCell(coordinateOfOtherCells).getPossibleValues().remove(cellWithValue.getValue());
         }
+    }
 
-        for(Coordinate coordinateOfOtherCells : regions.rows.get(rowNumber)) {
-            puzzle.grid.get(coordinateOfOtherCells.getRow()).get(coordinateOfOtherCells.getCol()).getPossibleValues().remove(cellWithValue.getValue());
+    private void removeValueFromEachCellInEachRow(Cell cellWithValue) {
+        for(Coordinate coordinateOfOtherCells : regions.getRows().get(cellWithValue.getCoordinate().getRow())) {
+            puzzle.getCell(coordinateOfOtherCells).getPossibleValues().remove(cellWithValue.getValue());
         }
     }
 

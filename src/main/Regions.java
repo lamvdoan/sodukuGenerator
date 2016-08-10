@@ -2,21 +2,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Regions {
-    List<List<Coordinate>> columns = new ArrayList<>();
-    List<List<Coordinate>> rows = new ArrayList<>();
+    private List<List<Coordinate>> columns = new ArrayList<>();
+    private List<List<Coordinate>> rows = new ArrayList<>();
 
     public Regions() {
-        for (int i = 0; i < 9; i++) {
+        for (int row = 0; row < 9; row++) {
             List<Coordinate> columnList = new ArrayList<>();
             List<Coordinate> rowList = new ArrayList<>();
 
-            for (int j = 0; j < 9; j++) {
-                columnList.add(new Coordinate(i, j));
-                rowList.add(new Coordinate(j, i));
+            for (int col = 0; col < 9; col++) {
+                columnList.add(new Coordinate(col, row));
+                rowList.add(new Coordinate(row, col));
             }
 
             columns.add(columnList);
             rows.add(rowList);
         }
+    }
+
+    public List<List<Coordinate>> getColumns() {
+        return columns;
+    }
+
+    public List<List<Coordinate>> getRows() {
+        return rows;
     }
 }

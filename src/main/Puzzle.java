@@ -5,7 +5,7 @@ import static java.lang.System.out;
 
 public class Puzzle {
     private static Puzzle instance = null;
-    List<List<Cell>> grid = new ArrayList<>();
+    private List<List<Cell>> grid = new ArrayList<>();
 
     public static Puzzle getInstance() {
         if(instance == null) {
@@ -17,6 +17,10 @@ public class Puzzle {
 
     private Puzzle() {
         initializeGrid();
+    }
+
+    public Cell getCell(Coordinate coordinate) {
+        return grid.get(coordinate.getRow()).get(coordinate.getCol());
     }
 
     public void generateNumbersForEachCell() {

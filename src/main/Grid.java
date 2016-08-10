@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+
 import static java.lang.System.out;
 
 
@@ -28,6 +29,15 @@ public class Grid {
         int count = 0;
         for(int row = 0; row < 9; row++) {
             for(int col = 0; col < 9; col++) {
+
+                if(gridList.get(row).get(col).getPossibleValues().size() == 0) {
+                    for(int i = 1; i < 10; i++) {
+                        gridList.get(row).get(col).getPossibleValues().add(i);
+                    }
+
+                    col--;
+                    gridList.get(row).get(col).getPossibleValues().add(gridList.get(row).get(col).getValue());
+                }
                 numberGenerator.generateNumberForCell(gridList.get(row).get(col));
                 out.println("Numbers generated: " + ++count);
             }

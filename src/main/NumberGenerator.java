@@ -17,8 +17,8 @@ public class NumberGenerator {
     }
 
     private void removePossibleValueForEachColumn(Cell cellWithValue) {
-//        removeValueFromEachCellInEachColumn(cellWithValue);
-//        removeValueFromEachCellInEachRow(cellWithValue);
+        removeValueFromEachCellInEachColumn(cellWithValue);
+        removeValueFromEachCellInEachRow(cellWithValue);
         removeValueFromEachCellInEachBlock(cellWithValue);
     }
 
